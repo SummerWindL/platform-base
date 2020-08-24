@@ -24,7 +24,7 @@
         <joda.version>2.9.9</joda.version>
         <jjwt.version>0.7.0</jjwt.version>
         <commons.io.version>2.5</commons.io.version>
-        <commons.beanutils>1.9.3</commons.beanutils>
+        <commons.beanutils>1.9.4</commons.beanutils>
         <slf4j.api.version>1.7.25</slf4j.api.version>
         <logback.version>1.2.3</logback.version>
         <servletapi.version>3.1.0</servletapi.version>
