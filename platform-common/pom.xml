@@ -15,7 +15,18 @@
     <modules>
         <module>platform-common-http</module>
         <module>platform-common-util</module>
+        <module>platform-common-comservice</module>
+        <module>platform-common-web</module>
     </modules>
+
+    <dependencies>
+        <!-- Java工具类-->
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+            <version>5.3.7</version>
+        </dependency>
+    </dependencies>
 
 
 </project>

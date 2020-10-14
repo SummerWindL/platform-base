@@ -1,0 +1,27 @@
+logging:
+  level:
+    root: INFO
+    com:
+      lemon: DEBUG
+  file:
+    name: logs/platform-ikinloop-comservice.log
+
+spring:
+  redis:
+    database: 0
+    host: 192.168.9.201
+    #    host: 114.55.11.51
+    port: 6379
+    password: redis
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+    timeout: 20000
+platform:
+  comservice:
+    app-id: wx968357120a739302
+    app-secret: 2838a72831e5fd9a8adbe828a74c4d53
+    code-url: https://api.weixin.qq.com/wxa/getwxacodeunlimit # 小程序码请求地址
+    access-url: https://api.weixin.qq.com/cgi-bin/token # 获取小程序全局唯一后台接口调用凭据 接口请求地址
