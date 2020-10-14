@@ -202,6 +202,58 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
     }
 
     /**
+     * 调用腾讯小程序码专用 请求成功返回字节流 请求失败返回Json格式
+     *
+     * @param url
+     * @param json
+     * @return
+     * @throws IOException
+     */
+    @Override
+    public <T> T tencentPostJson(String url, String json) throws IOException {
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        HttpPost httppost = new HttpPost(url);
+
+        RequestConfig config = RequestConfig.custom()
+                .setConnectTimeout(CONNECTION_TIMEOUT * 3)		//	设置连接超时参数
+                .setSocketTimeout(SOCKET_TIMEOUT * 10)
+                .setConnectionRequestTimeout(REQUEST_TIMEOUT * 3)
+                .build();
+        httppost.setConfig(config);
+
+        httppost.addHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON);
+        try {
+            StringEntity se = new StringEntity(json);
+            se.setContentType(CONTENT_TYPE_TEXT_JSON);
+            se.setContentEncoding(new BasicHeader(org.apache.http.protocol.HTTP.CONTENT_TYPE, APPLICATION_JSON));
+            httppost.setEntity(se);
+            CloseableHttpResponse response = httpclient.execute(httppost);
+            try {
+                HttpEntity entity = response.getEntity();
+                if (entity != null) {
+                    //返回的是JSON直接返回 Json级别错误 需要在外部区分返回类型 做部分判断逻辑
+                    if(entity.getContentType().getValue().matches("(.*)json(.*)")){
+                        return (T) EntityUtils.toString(entity,"UTF-8");
+                    }
+                    return (T) EntityUtils.toByteArray(entity);
+                }
+            } finally {
+                response.close();
+            }
+        } catch (IOException e) {
+            throw e;
+        } finally {
+            // 关闭连接,释放资源
+            try {
+                httpclient.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return (T) new byte[]{};
+    }
+
+    /**
      * 支持设置参数超时的 POST JSON 单位是毫秒
      *
      * @param url

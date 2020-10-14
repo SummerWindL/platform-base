@@ -25,6 +25,14 @@ public interface HttpClientService {
     String postJson(String url,String json) throws IOException;
 
     /**
+     * 调用腾讯小程序码专用 请求成功返回字节流 请求失败返回Json格式
+     * @param url
+     * @param json
+     * @return
+     * @throws IOException
+     */
+    <T> T tencentPostJson(String url, String json) throws IOException;
+    /**
      * 支持设置参数超时的 POST JSON 单位是毫秒
      * @param url
      * @param json
