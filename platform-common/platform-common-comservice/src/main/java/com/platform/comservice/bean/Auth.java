@@ -1,4 +1,4 @@
-package com.ikinloop.platform.comservice.bean;
+package com.platform.comservice.bean;
 
 import lombok.Data;
 

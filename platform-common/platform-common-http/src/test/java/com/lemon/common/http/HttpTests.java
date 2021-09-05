@@ -12,6 +12,7 @@ import java.util.Map;
 import com.lemon.common.http.HttpApplication;
 import com.lemon.common.http.client.HttpClientService;
 import com.lemon.common.http.client.HttpResponseWrapper;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Consts;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -37,9 +38,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = HttpApplication.class)
 public class HttpTests {
+
+	private String uri = "https://login.ti.com/as/authorization.oauth2?response_type=code&scope=openid%20email%20profile&client_id=DCIT_ALL_WWW-PROD&state=Wg6Dgsl1z3sEAcGD6STNgHfnia0&redirect_uri=https%3A%2F%2Fwww.ti.com%2Foidc%2Fredirect_uri%2F&nonce=F9n5sOJXOZLnWmEiSuRt0kE0Nyu2AerLj0HuYIhlJ_w&response_mode=form_post";
 	
 	@Autowired
 	HttpClientService httpClientService;
@@ -52,10 +56,59 @@ public class HttpTests {
 
 	@Test
 	public void get() throws IOException, URISyntaxException {
-		com.lemon.common.http.client.HttpResponseWrapper responseWrapper = httpClientService.get("http://www.vhcloud.net/EcgView.aspx?id=368497", null);
+		HttpResponseWrapper responseWrapper = httpClientService.get("http://www.vhcloud.net/EcgView.aspx?id=368497", null);
 		System.out.println(responseWrapper.getResponseBody());
 
 	}
+
+	@Test
+	public void getTest() throws IOException, URISyntaxException {
+		Map<String, Object> params = new HashMap<String, Object>();
+		HttpResponseWrapper responseWrapper = httpClientService.get("https://www.ti.com/search/coveo/newToken",params);
+		System.out.println(responseWrapper.getResponseBody());
+	}
+
+	/**
+	 * 2、登陆请求
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
+	//@Test
+	public void postTest(String action) throws IOException, URISyntaxException {
+	 	String URL= "https://login.ti.com/as/"+action+"/resume/as/authorization.ping";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("pf.username","854757115@qq.com");
+		params.put("pf.pass","Xjc.1123");
+		params.put("pf.adapterId","IDPAdapterHTMLFormCIDStandard");
+		HttpResponseWrapper wrapper = httpClientService.post(URL,params);
+		log.info("响应：{}",wrapper.getResponseBody());
+	}
+
+	/**
+	 * 1、获取登陆页面
+	 * @throws IOException
+	 * @throws URISyntaxException
+	 */
+	@Test
+	public void postGetLoginPage() throws IOException, URISyntaxException {
+	 	String url = "https://login.ti.com/as/authorization.oauth2";
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("response_type","code");
+		params.put("scope","openid email profile");
+		params.put("client_id","DCIT_ALL_WWW-PROD");
+		params.put("state","uwQOHVYyBT9owJSoBF30tedfJOM");
+		params.put("redirect_uri","https://www.ti.com/oidc/redirect_uri/");
+		params.put("nonce","dS364coOCp9kOJWpT4_QyMQaMKOIVosI_QN4fzqMADI");
+		params.put("response_mode","form_post");
+		HttpResponseWrapper wrapper = httpClientService.post(url,params);
+//		String data = wrapper.getResponseBody();
+//		int a = data.indexOf("action', '/as/");
+//		log.info("action：{}",wrapper.getResponseBody().substring(7613,7618));
+//		log.info("原始响应：{}",wrapper.getResponseBody());
+		postTest(wrapper.getResponseBody().substring(7613,7618));
+	}
+
+
 
 	@Test
 	public void testScrapy() throws ClientProtocolException, IOException, URISyntaxException {

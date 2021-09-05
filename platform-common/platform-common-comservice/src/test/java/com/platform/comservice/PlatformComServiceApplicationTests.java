@@ -5,8 +5,11 @@ import com.platform.common.util.JsonAdaptor;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import javax.annotation.Resource;
 
 /**
  * @ClassName PlatformComServiceApplicationTest
@@ -16,10 +19,11 @@ import org.springframework.test.context.junit4.SpringRunner;
  * @Version 1.0
  **/
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = PlatformComServiceApplication.class)
 public class PlatformComServiceApplicationTests {
+
     @Autowired
-    protected JsonAdaptor jsonAdaptor;
+    public JsonAdaptor jsonAdaptor;
 
 
     @Test

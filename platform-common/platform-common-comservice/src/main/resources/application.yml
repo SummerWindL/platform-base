@@ -4,12 +4,12 @@ logging:
     com:
       lemon: DEBUG
   file:
-    name: logs/platform-ikinloop-comservice.log
+    name: logs/platform-common-comservice.log
 
 spring:
   redis:
     database: 0
-    host: 192.168.9.201
+    host: 127.0.0.1
     #    host: 114.55.11.51
     port: 6379
     password: redis
