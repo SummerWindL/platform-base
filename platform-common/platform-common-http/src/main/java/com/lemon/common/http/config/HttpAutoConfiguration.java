@@ -2,6 +2,7 @@ package com.lemon.common.http.config;
 
 import com.lemon.common.http.client.HttpClientService;
 import com.lemon.common.http.client.impl.ApacheHttpClientServiceImpl;
+import com.platform.common.util.JsonAdaptor;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.context.annotation.Bean;
@@ -20,5 +21,11 @@ public class HttpAutoConfiguration {
     @ConditionalOnMissingBean(HttpClientService.class)
     ApacheHttpClientServiceImpl apacheHttpClient(){
         return new ApacheHttpClientServiceImpl();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean(JsonAdaptor.class)
+    JsonAdaptor jsonAdaptor(){
+        return new JsonAdaptor();
     }
 }

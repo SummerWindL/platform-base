@@ -12,6 +12,8 @@ import java.util.Map;
 import com.lemon.common.http.HttpApplication;
 import com.lemon.common.http.client.HttpClientService;
 import com.lemon.common.http.client.HttpResponseWrapper;
+import com.platform.common.util.JsonAdaptor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.http.Consts;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -37,12 +39,15 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 
+@Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = HttpApplication.class)
 public class HttpTests {
 	
 	@Autowired
 	HttpClientService httpClientService;
+	@Autowired
+	private JsonAdaptor jsonAdaptor;
 	
 	 @Test
 	public void sayHello() throws IOException, URISyntaxException{
@@ -52,14 +57,23 @@ public class HttpTests {
 
 	@Test
 	public void get() throws IOException, URISyntaxException {
-		com.lemon.common.http.client.HttpResponseWrapper responseWrapper = httpClientService.get("http://www.vhcloud.net/EcgView.aspx?id=368497", null);
+		Map<String, String> params = new HashMap<String, String>();
+		com.lemon.common.http.client.HttpResponseWrapper responseWrapper = httpClientService.get("https://www.ti.com/", params);
 		System.out.println(responseWrapper.getResponseBody());
 
 	}
 
 	@Test
+	public void post() throws IOException, URISyntaxException {
+		Map<String, String> params = new HashMap<String, String>();
+		String url ="https://www.ti.com/";
+		HttpResponseWrapper post = httpClientService.post(url, params);
+		log.info("响应{}",post.getResponseBody());
+	}
+
+	@Test
 	public void testScrapy() throws ClientProtocolException, IOException, URISyntaxException {
-		String url = "http://www.vhcloud.net/EcgView.aspx?id=368497";
+		String url = "https://www.ti.com/";
 		Map<String, String> params = new HashMap<String, String>();
 		CloseableHttpClient httpclient = HttpClients.custom().build();	
         try {
