@@ -9,6 +9,7 @@
     <version>0.1-SNAPSHOT</version>
     <modules>
         <module>platform-common</module>
+        <module>platform-auth</module>
     </modules>
     <packaging>pom</packaging>
 

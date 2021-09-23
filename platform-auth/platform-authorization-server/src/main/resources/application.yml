@@ -1,0 +1,14 @@
+debug: true
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost/temp_work?useUnicode=true&characterEncoding=UTF-8&useSSL=false&autoReconnect=true&failOverReadOnly=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: Admin1234
+
+logging:
+  level:
+    org:
+      springframework:
+        boot:
+          autoconfigure: ERROR         # 日志不打印条件评估报告
