@@ -9,7 +9,7 @@ import java.io.Serializable;
 /**
  * 
  * @ClassName		: JWTInfo 
- * @author			: Alfred
+ * @author			: Advance
  * @date 			: 2017年12月21日 下午3:05:19 
  *
  */

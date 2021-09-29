@@ -16,7 +16,7 @@ import java.util.jar.JarFile;
 /**
  * 通过包名获取class
  * @ClassName		: ClassTools 
- * @author			: Alfred
+ * @author			: Advance
  * @date 			: 2018年2月7日 下午3:23:54 
  *
  */
