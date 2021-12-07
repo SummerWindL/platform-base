@@ -97,6 +97,7 @@ public class Validator {
 
     /**
      * 检验验证码
+     *
      * @param email
      * @return 校验通过返回true，否则返回false
      */

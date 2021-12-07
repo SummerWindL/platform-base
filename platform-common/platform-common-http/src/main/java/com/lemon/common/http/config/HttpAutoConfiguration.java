@@ -19,13 +19,13 @@ public class HttpAutoConfiguration {
 
     @Bean
     @ConditionalOnMissingBean(HttpClientService.class)
-    ApacheHttpClientServiceImpl apacheHttpClient(){
+    ApacheHttpClientServiceImpl apacheHttpClient() {
         return new ApacheHttpClientServiceImpl();
     }
 
     @Bean
     @ConditionalOnMissingBean(JsonAdaptor.class)
-    JsonAdaptor jsonAdaptor(){
+    JsonAdaptor jsonAdaptor() {
         return new JsonAdaptor();
     }
 }

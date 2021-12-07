@@ -32,6 +32,7 @@ import java.security.spec.InvalidKeySpecException;
 import java.security.spec.X509EncodedKeySpec;
 import java.util.Base64;
 import java.util.Collections;
+
 /**
  * @author : yanl
  * @version V1.0
@@ -128,7 +129,7 @@ public class ResourceServerConfig extends WebSecurityConfigurerAdapter {
         byte[] publicKeyBytes = Base64.getDecoder().decode(publicKeyStr);
         X509EncodedKeySpec keySpec = new X509EncodedKeySpec(publicKeyBytes);
         KeyFactory keyFactory = KeyFactory.getInstance("RSA");
-        RSAPublicKey rsaPublicKey = (RSAPublicKey)keyFactory.generatePublic(keySpec);
+        RSAPublicKey rsaPublicKey = (RSAPublicKey) keyFactory.generatePublic(keySpec);
         NimbusJwtDecoder.PublicKeyJwtDecoderBuilder jwtDecoderBuilder = NimbusJwtDecoder.withPublicKey(rsaPublicKey);
 
         // 授权服务器 jwk 的信息

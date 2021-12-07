@@ -20,13 +20,14 @@ public class IdUtils {
      * @Author: fuyl
      * @Date: 2019/7/30
      */
-    public static synchronized String getLocalTrmSeqNum(String id,int length) {
+    public static synchronized String getLocalTrmSeqNum(String id, int length) {
         sequence = sequence >= 999999 ? 1 : sequence + 1;
         String datetime = new SimpleDateFormat("yyyyMMddHHmmss")
                 .format(new Date());
         String s = Integer.toString(sequence);
-        return id.isEmpty()?datetime +addLeftZero(s, length):id;
+        return id.isEmpty() ? datetime + addLeftZero(s, length) : id;
     }
+
     /***
      * @Description: 左填0
      * @Param: [s, length]

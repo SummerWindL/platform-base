@@ -68,9 +68,9 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
     private static PoolingHttpClientConnectionManager cm = null;
     private static SSLContextBuilder builder = null;
     private static ConnectionKeepAliveStrategy myStrategy = null;
-    private final int CONNECTION_TIMEOUT = 10 *1000;
-    private final int SOCKET_TIMEOUT = 10 *1000;
-    private final int REQUEST_TIMEOUT = 10 *1000;
+    private final int CONNECTION_TIMEOUT = 10 * 1000;
+    private final int SOCKET_TIMEOUT = 10 * 1000;
+    private final int REQUEST_TIMEOUT = 10 * 1000;
 
     static {
         try {
@@ -82,10 +82,10 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
                     return true;
                 }
             });
-            sslsf = new SSLConnectionSocketFactory(builder.build(),new String[]{"SSLv2Hello","SSLv3","TLSv1","TLSv1.2"},null, NoopHostnameVerifier.INSTANCE);
+            sslsf = new SSLConnectionSocketFactory(builder.build(), new String[]{"SSLv2Hello", "SSLv3", "TLSv1", "TLSv1.2"}, null, NoopHostnameVerifier.INSTANCE);
             Registry<ConnectionSocketFactory> registry = RegistryBuilder.<ConnectionSocketFactory>create()
-                    .register(PROTOCOL_HTTP,new PlainConnectionSocketFactory())
-                    .register(PROTOCOL_HTTPS,sslsf)
+                    .register(PROTOCOL_HTTP, new PlainConnectionSocketFactory())
+                    .register(PROTOCOL_HTTPS, sslsf)
                     .build();
             cm = new PoolingHttpClientConnectionManager(registry);
             cm.setMaxTotal(200); //max connection
@@ -96,20 +96,20 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
                     // Honor 'keep-alive' header
                     HeaderElementIterator it = new BasicHeaderElementIterator(
                             response.headerIterator(CONN_KEEP_ALIVE));
-                    while(it.hasNext()){
+                    while (it.hasNext()) {
                         HeaderElement he = it.nextElement();
                         String param = he.getName();
                         String value = he.getValue();
-                        if(value != null && param.equalsIgnoreCase("timeout")){
+                        if (value != null && param.equalsIgnoreCase("timeout")) {
                             return Long.parseLong(value) * 1000;
                         }
                     }
                     HttpHost target = (HttpHost) context.getAttribute(
                             HttpClientContext.HTTP_TARGET_HOST);
-                    if("www.lemon.com".equalsIgnoreCase(target.getHostName())){
+                    if ("www.lemon.com".equalsIgnoreCase(target.getHostName())) {
                         //keep alive for 5 seconds only
                         return 20 * 1000;
-                    }else{
+                    } else {
                         return 30 * 1000;
                     }
                 }
@@ -134,45 +134,45 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
         httpPost.setConfig(config);
         List<NameValuePair> nvps = new ArrayList<NameValuePair>();
         Iterator<String> iter = params.keySet().iterator();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             String key = iter.next();
             String val = String.valueOf(params.get(key));
-            nvps.add(new BasicNameValuePair(key,val));
+            nvps.add(new BasicNameValuePair(key, val));
         }
-        httpPost.setEntity(new UrlEncodedFormEntity(nvps,Consts.UTF_8));
+        httpPost.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
         return execute(httpPost);
     }
 
     private HttpResponseWrapper execute(HttpUriRequest httpUriRequest) throws IOException {
         CloseableHttpClient httpClient = getHttpClient();
-        try{
+        try {
             ResponseHandler<HttpResponseWrapper> responseHandler =
                     new ResponseHandler<HttpResponseWrapper>() {
                         @Override
                         public HttpResponseWrapper handleResponse(HttpResponse response)
                                 throws ClientProtocolException, IOException {
                             HttpResponseWrapper responseWrapper = null;
-                            if(response != null){
+                            if (response != null) {
                                 responseWrapper = new HttpResponseWrapper();
                                 int status = response.getStatusLine().getStatusCode();
                                 responseWrapper.setStatusCode(status);
 
                                 HttpEntity entity = response.getEntity();
-                                if(entity != null){
+                                if (entity != null) {
                                     responseWrapper.setResponseBody(EntityUtils.toString(entity));
                                 }
                             }
                             return responseWrapper;
                         }
                     };
-            return httpClient.execute(httpUriRequest,responseHandler);
-        }finally {
+            return httpClient.execute(httpUriRequest, responseHandler);
+        } finally {
             httpClient.close();
         }
 
     }
 
-    private CloseableHttpClient getHttpClient(){
+    private CloseableHttpClient getHttpClient() {
         CloseableHttpClient httpClient = HttpClients.custom()
                 /* .setSSLSocketFactory(sslsf)
                 .setConnectionManager(cm)
@@ -198,7 +198,7 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
      */
     @Override
     public String postJson(String url, String json) throws IOException {
-        return postJson (url, json, CONNECTION_TIMEOUT * 3, SOCKET_TIMEOUT * 3, REQUEST_TIMEOUT * 3);
+        return postJson(url, json, CONNECTION_TIMEOUT * 3, SOCKET_TIMEOUT * 3, REQUEST_TIMEOUT * 3);
     }
 
     /**
@@ -215,7 +215,7 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
         HttpPost httppost = new HttpPost(url);
 
         RequestConfig config = RequestConfig.custom()
-                .setConnectTimeout(CONNECTION_TIMEOUT * 3)		//	设置连接超时参数
+                .setConnectTimeout(CONNECTION_TIMEOUT * 3)        //	设置连接超时参数
                 .setSocketTimeout(SOCKET_TIMEOUT * 10)
                 .setConnectionRequestTimeout(REQUEST_TIMEOUT * 3)
                 .build();
@@ -232,8 +232,8 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
                 HttpEntity entity = response.getEntity();
                 if (entity != null) {
                     //返回的是JSON直接返回 Json级别错误 需要在外部区分返回类型 做部分判断逻辑
-                    if(entity.getContentType().getValue().matches("(.*)json(.*)")){
-                        return (T) EntityUtils.toString(entity,"UTF-8");
+                    if (entity.getContentType().getValue().matches("(.*)json(.*)")) {
+                        return (T) EntityUtils.toString(entity, "UTF-8");
                     }
                     return (T) EntityUtils.toByteArray(entity);
                 }
@@ -276,28 +276,28 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
                 .build();
         httpPost.setConfig(config);
 
-        httpPost.addHeader(HTTP.CONTENT_TYPE,APPLICATION_JSON);
-        try{
+        httpPost.addHeader(HTTP.CONTENT_TYPE, APPLICATION_JSON);
+        try {
             StringEntity se = new StringEntity(json);
             se.setContentType(CONTENT_TYPE_TEXT_JSON);
-            se.setContentEncoding(new BasicHeader(CONTENT_TYPE,APPLICATION_JSON));
+            se.setContentEncoding(new BasicHeader(CONTENT_TYPE, APPLICATION_JSON));
             httpPost.setEntity(se);
             CloseableHttpResponse response = httpClient.execute(httpPost);
-            try{
+            try {
                 HttpEntity entity = response.getEntity();
-                if(entity!= null){
-                    return EntityUtils.toString(entity,"UTF-8");
+                if (entity != null) {
+                    return EntityUtils.toString(entity, "UTF-8");
                 }
-            }finally {
+            } finally {
                 response.close();
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             throw e;
         } finally {
             //关闭连接，释放资源
-            try{
+            try {
                 httpClient.close();
-            }catch (IOException e){
+            } catch (IOException e) {
                 e.printStackTrace();
             }
         }
@@ -309,10 +309,10 @@ public class ApacheHttpClientServiceImpl implements HttpClientService {
             throws IOException, URISyntaxException {
         URIBuilder uriBuilder = new URIBuilder(url);
         Iterator<String> iter = params.keySet().iterator();
-        while(iter.hasNext()){
+        while (iter.hasNext()) {
             String key = iter.next();
             String val = String.valueOf(params.get(key));
-            uriBuilder.setParameter(key,val);
+            uriBuilder.setParameter(key, val);
         }
         HttpGet httpGet = new HttpGet(uriBuilder.build());
 

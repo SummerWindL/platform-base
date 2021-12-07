@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false" scan="true" scanPeriod="1 seconds">
+
+    <property name="serviceName" value="platform-quartza" />
+    <contextName>platform-aix-framework</contextName>
+
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>[ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="error"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/${serviceName}-error-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <maxHistory>15</maxHistory>	  <!--	只保留15天的日志文件	-->
+            <maxFileSize>64 MB</maxFileSize>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>[ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <prudent>false</prudent>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter"><!-- 只打印错误日志 -->
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <appender name="access"
+              class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${user.dir}/logs/${serviceName}-%d{yyyy-MM-dd}.%i.log.zip</fileNamePattern>
+            <maxHistory>15</maxHistory>	  <!--	只保留15天的日志文件	-->
+            <maxFileSize>64 MB</maxFileSize>
+        </rollingPolicy>
+
+        <encoder>
+            <pattern>[ %-5level] [%date{yyyy-MM-dd HH:mm:ss}] %logger{96} [%line] - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- Safely log to the same file from multiple JVMs. Degrades performance! -->
+        <prudent>false</prudent>
+    </appender>
+
+    <!-- 1. 输出SQL 到控制台和文件-->
+    <logger name="org.hibernate.SQL"  level="TRACE" >
+        <appender-ref ref="access"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+    <!--2、JdbcTemplate的日志输出器 -->
+    <logger name="org.springframework.jdbc.core.StatementCreatorUtils"
+            additivity="false" level="TRACE">
+        <appender-ref ref="access"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+    <logger name="org.springframework.jdbc.core" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="access"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+    <logger name="java.sql.Connection" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="access"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+    <logger name="java.sql.Statement" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="access"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+    <logger name="java.sql.PreparedStatement" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="access"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+    <logger name="java.sql.ResultSet" additivity="true">
+        <level value="DEBUG" />
+        <appender-ref ref="access"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+
+    <!-- 2. 输出SQL 的参数到控制台和文件-->
+    <!--<logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="TRACE" >-->
+        <!--<appender-ref ref="console"/>-->
+        <!--<appender-ref ref="error"/>-->
+        <!--<appender-ref ref="access"/>-->
+    <!--</logger>-->
+
+    <!--<logger name="org.springframework.data.repository.core" level="DEBUG">-->
+        <!--<appender-ref ref="console"/>-->
+        <!--<appender-ref ref="error"/>-->
+        <!--<appender-ref ref="access"/>-->
+    <!--</logger>-->
+
+    <logger name="org.springframework.data.redis.core" level="ERROR">
+        <appender-ref ref="console"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+
+    <logger name="org.springframework.data.mongodb.core" level="ERROR">
+        <appender-ref ref="console"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>
+
+    <!--<logger name="com.platform" level="DEBUG">
+        <appender-ref ref="console"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </logger>-->
+
+    <root level="DEBUG">
+        <appender-ref ref="console"/>
+        <appender-ref ref="error"/>
+        <appender-ref ref="access"/>
+    </root>
+
+</configuration>

@@ -1,5 +1,7 @@
-/Users/yanliangfu/Desktop/20_project/a-git/uexam/source/platform-base/platform-common/platform-common-comservice/src/main/java/com/platform/comservice/PlatformComServiceApplication.java
-/Users/yanliangfu/Desktop/20_project/a-git/uexam/source/platform-base/platform-common/platform-common-comservice/src/main/java/com/platform/comservice/config/ComServiceProperties.java
-/Users/yanliangfu/Desktop/20_project/a-git/uexam/source/platform-base/platform-common/platform-common-comservice/src/main/java/com/platform/comservice/service/TencentMiniProApiService.java
-/Users/yanliangfu/Desktop/20_project/a-git/uexam/source/platform-base/platform-common/platform-common-comservice/src/main/java/com/platform/comservice/bean/Auth.java
-/Users/yanliangfu/Desktop/20_project/a-git/uexam/source/platform-base/platform-common/platform-common-comservice/src/main/java/com/platform/comservice/service/impl/TencentMiniProApiServiceImpl.java
+D:\mygit\platform-base\platform-common\platform-common-comservice\src\main\java\com\platform\comservice\bean\Auth.java
+D:\mygit\platform-base\platform-common\platform-common-comservice\src\main\java\com\platform\comservice\service\TencentMiniProApiService.java
+D:\mygit\platform-base\platform-common\platform-common-comservice\src\main\java\com\platform\comservice\config\BeanAutowiredConfig.java
+D:\mygit\platform-base\platform-common\platform-common-comservice\src\main\java\com\platform\comservice\PlatformComServiceApplication.java
+D:\mygit\platform-base\platform-common\platform-common-comservice\src\main\java\com\platform\comservice\service\impl\TencentMiniProApiServiceImpl.java
+D:\mygit\platform-base\platform-common\platform-common-comservice\src\main\java\com\platform\comservice\config\BeanAutowired.java
+D:\mygit\platform-base\platform-common\platform-common-comservice\src\main\java\com\platform\comservice\config\ComServiceProperties.java

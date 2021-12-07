@@ -9,15 +9,16 @@ import java.util.UUID;
  * @author Jesse Zheng
  */
 public class UUIDUtils {
-	public static String getUUID() {
-		return UUID.randomUUID().toString().replaceAll("-", "");
-	}
-	public static String getUUID(String id){
-		if(id.isEmpty()){
-			return UUID.randomUUID().toString().replaceAll("-", "");
-		}else{
-			return id;
-		}
+    public static String getUUID() {
+        return UUID.randomUUID().toString().replaceAll("-", "");
+    }
 
-	}
+    public static String getUUID(String id) {
+        if (id.isEmpty()) {
+            return UUID.randomUUID().toString().replaceAll("-", "");
+        } else {
+            return id;
+        }
+
+    }
 }

@@ -9,5 +9,5 @@ import java.util.Map;
  * @create: 2020-07-03 11:03
  **/
 public interface ParamsGenerator {
-    Map<String,Object> generate();
+    Map<String, Object> generate();
 }

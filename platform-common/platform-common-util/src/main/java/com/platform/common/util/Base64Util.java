@@ -17,7 +17,7 @@ public class Base64Util {
      * @return
      * @throws Exception
      */
-    public static byte[] decryptBASE64(byte[] key){
+    public static byte[] decryptBASE64(byte[] key) {
         return Base64Utils.decode(key);
     }
 
@@ -28,7 +28,7 @@ public class Base64Util {
      * @return
      * @throws Exception
      */
-    public static String encryptBASE64(byte[] key){
+    public static String encryptBASE64(byte[] key) {
         return new String(Base64Utils.encode(key));
     }
 }

@@ -10,6 +10,8 @@
     <modules>
         <module>platform-common</module>
         <module>platform-auth</module>
+        <module>platform-quartza</module>
+        <module>platform-activiti</module>
     </modules>
     <packaging>pom</packaging>
 
@@ -31,10 +33,21 @@
         <servletapi.version>3.1.0</servletapi.version>
         <commons.lang3.version>3.6</commons.lang3.version>
         <poi.version>3.15</poi.version>
+        <spring.boot.version>2.5.4</spring.boot.version>
     </properties>
     <dependencyManagement>
         <dependencies>
-
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-test</artifactId>
+                <version>${spring.boot.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>junit</groupId>
+                <artifactId>junit</artifactId>
+                <scope>test</scope>
+            </dependency>
             <!-- jackson -->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>

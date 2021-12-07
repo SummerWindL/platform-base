@@ -10,6 +10,7 @@ import java.text.DecimalFormat;
 
 /**
  * double类型转换
+ *
  * @author: Advance
  * @date: 2018/9/5
  * @description:

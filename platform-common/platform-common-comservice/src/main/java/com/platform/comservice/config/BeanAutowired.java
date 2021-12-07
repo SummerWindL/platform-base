@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class BeanAutowired {
     @Bean
-    JsonAdaptor jsonAdaptor(){
+    JsonAdaptor jsonAdaptor() {
         return new JsonAdaptor();
     }
 }

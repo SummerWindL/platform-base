@@ -41,10 +41,10 @@ public class CodeGenerator extends PlatformComServiceApplicationTests {
     @Test
     public void test() throws IOException, URISyntaxException {
         //1.获取检测小程序access_token
-        Map<String,Object> params = new HashMap<>();
-        params.put("grant_type","client_credential");
-        params.put("appid","wx968357120a739302");
-        params.put("secret","2838a72831e5fd9a8adbe828a74c4d53");
+        Map<String, Object> params = new HashMap<>();
+        params.put("grant_type", "client_credential");
+        params.put("appid", "wx968357120a739302");
+        params.put("secret", "2838a72831e5fd9a8adbe828a74c4d53");
         HttpResponseWrapper httpResponseWrapper = httpClientService.get("https://api.weixin.qq.com/cgi-bin/token", params);
         Auth auth = JSONUtil.parseObj(httpResponseWrapper.getResponseBody()).toBean(Auth.class);
         //2.post获取小程序码Buff
@@ -58,9 +58,9 @@ public class CodeGenerator extends PlatformComServiceApplicationTests {
         printResult(codeParams);
         Object o = httpClientService.tencentPostJson("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + auth.getAccess_token(), codeParams.toString());
         byte[] bytes1 = null;
-        if(o instanceof byte[]){
+        if (o instanceof byte[]) {
             bytes1 = (byte[]) o;
-        }else if(o instanceof String){
+        } else if (o instanceof String) {
             System.out.println(o.toString());
         }
 //        postMiniqrQr("a=1",auth.getAccess_token());
@@ -97,14 +97,14 @@ public class CodeGenerator extends PlatformComServiceApplicationTests {
     }
 
     @Data
-    public static class Auth{
+    public static class Auth {
 
         private String access_token;
     }
 
     public static void postMiniqrQr(String scene, String accessToken) {
-        try{
-            URL url = new URL("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token="+accessToken);
+        try {
+            URL url = new URL("https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token=" + accessToken);
             HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
             // conn.setConnectTimeout(10000);//连接超时 单位毫秒
             // conn.setReadTimeout(2000);//读取超时 单位毫秒
@@ -131,8 +131,7 @@ public class CodeGenerator extends PlatformComServiceApplicationTests {
             //ByteArrayOutputStream os = new ByteArrayOutputStream();
             int len;
             byte[] arr = new byte[1024];
-            while ((len = bis.read(arr)) != -1)
-            {
+            while ((len = bis.read(arr)) != -1) {
                 os.write(arr, 0, len);
                 os.flush();
             }
@@ -141,15 +140,13 @@ public class CodeGenerator extends PlatformComServiceApplicationTests {
             // 上传云储存
             //InputStream is = new ByteArrayInputStream(os.toByteArray());
             //retMap = UploadUtils.upload(is);
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     @Test
-    public void testX(){
+    public void testX() {
         String accessToken = tencentMiniProApiService.getAuthAccessToken("wx968357120a739302", "2838a72831e5fd9a8adbe828a74c4d53");
         System.out.println(accessToken);
 

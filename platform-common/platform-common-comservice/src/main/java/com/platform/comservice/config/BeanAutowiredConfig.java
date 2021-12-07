@@ -16,7 +16,7 @@ public class BeanAutowiredConfig {
 
     @Bean
     @ConditionalOnMissingBean(JsonAdaptor.class)
-    JsonAdaptor jsonAdaptor(){
+    JsonAdaptor jsonAdaptor() {
         return new JsonAdaptor();
     }
 }

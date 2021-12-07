@@ -1,13 +1,13 @@
 /**
- *文件名:HttpUtil.java
- *版权:ikinloop
- *描述:
- *修改人:rivers
- *修改时间:2017年6月19日
- *修改内容:
- *跟踪单号
- *修改单号
-*/
+ * 文件名:HttpUtil.java
+ * 版权:ikinloop
+ * 描述:
+ * 修改人:rivers
+ * 修改时间:2017年6月19日
+ * 修改内容:
+ * 跟踪单号
+ * 修改单号
+ */
 
 package com.lemon.common.http;
 
@@ -60,16 +60,16 @@ import org.apache.http.conn.ssl.NoopHostnameVerifier;
  *@since [产品/模块版本]
  */
 public class HttpUtil {
-	
-	private final static Logger LOGGER = LoggerFactory.getLogger(HttpUtil.class);
-	
-	private static final String HTTP = "http";
+
+    private final static Logger LOGGER = LoggerFactory.getLogger(HttpUtil.class);
+
+    private static final String HTTP = "http";
     private static final String HTTPS = "https";
     private static SSLConnectionSocketFactory sslsf = null;
     private static PoolingHttpClientConnectionManager cm = null;
     private static SSLContextBuilder builder = null;
     private static ConnectionKeepAliveStrategy myStrategy = null;
-    
+
     static {
         try {
             builder = new SSLContextBuilder();
@@ -87,7 +87,7 @@ public class HttpUtil {
                     .build();
             cm = new PoolingHttpClientConnectionManager(registry);
             cm.setMaxTotal(200);//max connection
-            
+
             myStrategy = new ConnectionKeepAliveStrategy() {
 
                 public long getKeepAliveDuration(HttpResponse response, HttpContext context) {
@@ -101,7 +101,7 @@ public class HttpUtil {
                         if (value != null && param.equalsIgnoreCase("timeout")) {
                             try {
                                 return Long.parseLong(value) * 1000;
-                            } catch(NumberFormatException ignore) {
+                            } catch (NumberFormatException ignore) {
                             }
                         }
                     }
@@ -117,91 +117,91 @@ public class HttpUtil {
                 }
 
             };
-            
+
         } catch (Exception e) {
-        	LOGGER.error(e.getMessage(), e);
+            LOGGER.error(e.getMessage(), e);
             e.printStackTrace();
         }
     }
-	
-	public static class HttpResponseWrapper{
-		
-		private int statusCode;
-		
-		private String responseBody;
 
-		public int getStatusCode() {
-			return statusCode;
-		}
+    public static class HttpResponseWrapper {
 
-		public void setStatusCode(int statusCode) {
-			this.statusCode = statusCode;
-		}
+        private int statusCode;
 
-		public String getResponseBody() {
-			return responseBody;
-		}
+        private String responseBody;
 
-		public void setResponseBody(String responseBody) {
-			this.responseBody = responseBody;
-		}
-		
-		
-	}
-	
-	public static HttpResponseWrapper post(String url, Map<String, String> params) throws IOException {
-		
-		CloseableHttpClient httpclient = getHttpClient();	
+        public int getStatusCode() {
+            return statusCode;
+        }
+
+        public void setStatusCode(int statusCode) {
+            this.statusCode = statusCode;
+        }
+
+        public String getResponseBody() {
+            return responseBody;
+        }
+
+        public void setResponseBody(String responseBody) {
+            this.responseBody = responseBody;
+        }
+
+
+    }
+
+    public static HttpResponseWrapper post(String url, Map<String, String> params) throws IOException {
+
+        CloseableHttpClient httpclient = getHttpClient();
         try {
-        	
-        	HttpPost httpPost = new HttpPost(url);
-        	
-        	RequestConfig config = RequestConfig.custom()
-        			.setConnectTimeout(10000)
-        			.setSocketTimeout(10000)
-        			.setConnectionRequestTimeout(10000)
-        			.build();
-        	
-        	httpPost.setConfig(config);
-        	List <NameValuePair> nvps = new ArrayList <NameValuePair>();
-        	Iterator<String> iter = params.keySet().iterator();
-        	while (iter.hasNext()) {
-        		String key = iter.next();
-        		String val = params.get(key);
-        		nvps.add(new BasicNameValuePair(key, val));
-        	}
 
-        	httpPost.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
-        	
+            HttpPost httpPost = new HttpPost(url);
 
-            ResponseHandler<HttpResponseWrapper> responseHandler = 
-            		new ResponseHandler<HttpResponseWrapper>() {
+            RequestConfig config = RequestConfig.custom()
+                    .setConnectTimeout(10000)
+                    .setSocketTimeout(10000)
+                    .setConnectionRequestTimeout(10000)
+                    .build();
 
-				@Override
-				public HttpResponseWrapper handleResponse(HttpResponse response)
-						throws ClientProtocolException, IOException {
-					HttpResponseWrapper responseWrapper = null;
-					if (response != null) {
-						responseWrapper = new HttpResponseWrapper();
-						int status = response.getStatusLine().getStatusCode();
-						responseWrapper.setStatusCode(status);
-						
-						HttpEntity entity = response.getEntity();
-						if (entity != null) {
-							responseWrapper.setResponseBody(EntityUtils.toString(entity));
-						}
-					}
-					return responseWrapper;
-				}
+            httpPost.setConfig(config);
+            List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+            Iterator<String> iter = params.keySet().iterator();
+            while (iter.hasNext()) {
+                String key = iter.next();
+                String val = params.get(key);
+                nvps.add(new BasicNameValuePair(key, val));
+            }
 
-            };
+            httpPost.setEntity(new UrlEncodedFormEntity(nvps, Consts.UTF_8));
+
+
+            ResponseHandler<HttpResponseWrapper> responseHandler =
+                    new ResponseHandler<HttpResponseWrapper>() {
+
+                        @Override
+                        public HttpResponseWrapper handleResponse(HttpResponse response)
+                                throws ClientProtocolException, IOException {
+                            HttpResponseWrapper responseWrapper = null;
+                            if (response != null) {
+                                responseWrapper = new HttpResponseWrapper();
+                                int status = response.getStatusLine().getStatusCode();
+                                responseWrapper.setStatusCode(status);
+
+                                HttpEntity entity = response.getEntity();
+                                if (entity != null) {
+                                    responseWrapper.setResponseBody(EntityUtils.toString(entity));
+                                }
+                            }
+                            return responseWrapper;
+                        }
+
+                    };
             return httpclient.execute(httpPost, responseHandler);
         } finally {
             httpclient.close();
         }
-	}
-	
-	public static CloseableHttpClient getHttpClient() throws IOException {
+    }
+
+    public static CloseableHttpClient getHttpClient() throws IOException {
         CloseableHttpClient httpClient = HttpClients.custom()
                 .setSSLSocketFactory(sslsf)
                 .setConnectionManager(cm)

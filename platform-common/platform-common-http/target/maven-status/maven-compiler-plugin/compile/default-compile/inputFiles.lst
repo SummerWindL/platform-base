@@ -1,7 +1,7 @@
-C:\D\git\Java_Tool_Maven\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\client\HttpClientService.java
-C:\D\git\Java_Tool_Maven\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\HttpApplication.java
-C:\D\git\Java_Tool_Maven\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\client\impl\ApacheHttpClientServiceImpl.java
-C:\D\git\Java_Tool_Maven\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\config\HttpAutoConfiguration.java
-C:\D\git\Java_Tool_Maven\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\client\HttpResponseWrapper.java
-C:\D\git\Java_Tool_Maven\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\generator\ApiParamsGenerator.java
-C:\D\git\Java_Tool_Maven\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\generator\ParamsGenerator.java
+D:\mygit\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\config\HttpAutoConfiguration.java
+D:\mygit\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\client\impl\ApacheHttpClientServiceImpl.java
+D:\mygit\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\HttpApplication.java
+D:\mygit\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\client\HttpResponseWrapper.java
+D:\mygit\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\generator\ApiParamsGenerator.java
+D:\mygit\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\generator\ParamsGenerator.java
+D:\mygit\platform-base\platform-common\platform-common-http\src\main\java\com\lemon\common\http\client\HttpClientService.java

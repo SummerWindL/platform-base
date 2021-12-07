@@ -1,0 +1,21 @@
+logging:
+  file: logs/platform-core-activiti.log
+  level:
+    root: INFO
+    com:
+      platform: DEBUG
+    org:
+      springframework:
+        data:
+          mongodb:
+            core: WARN
+      # 获取到请求参数
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
+spring:
+  profiles:
+    active:
+      - dev

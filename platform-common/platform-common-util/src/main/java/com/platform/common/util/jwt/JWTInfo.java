@@ -7,28 +7,26 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
- * 
- * @ClassName		: JWTInfo 
- * @author			: Advance
- * @date 			: 2017年12月21日 下午3:05:19 
- *
+ * @ClassName        : JWTInfo
+ * @author            : Advance
+ * @date : 2017年12月21日 下午3:05:19
  */
 @ToString
 @Setter
 @Getter
 public class JWTInfo implements Serializable {
 
-	private static final long serialVersionUID = -525924043776022944L;
-	
-	private String id;
-	
+    private static final long serialVersionUID = -525924043776022944L;
+
+    private String id;
+
     private String name;
-    
+
     private String alias;
 
     private String role;
 
-    public JWTInfo(String id, String name, String alias) { 
+    public JWTInfo(String id, String name, String alias) {
         this.id = id;
         this.name = name;
         this.alias = alias;

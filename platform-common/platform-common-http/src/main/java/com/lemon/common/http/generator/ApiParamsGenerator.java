@@ -1,8 +1,6 @@
 package com.lemon.common.http.generator;
 
 
-
-
 import org.apache.commons.codec.digest.DigestUtils;
 
 import java.util.HashMap;
@@ -25,7 +23,7 @@ public class ApiParamsGenerator implements ParamsGenerator {
 
     @Override
     public Map<String, Object> generate() {
-        Map<String,Object> params = new HashMap<String, Object>();
+        Map<String, Object> params = new HashMap<String, Object>();
         long tsTime = System.currentTimeMillis();
         String ts = String.valueOf(tsTime);
 
