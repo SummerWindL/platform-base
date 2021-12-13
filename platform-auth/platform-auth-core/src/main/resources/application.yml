@@ -1,0 +1,7 @@
+server:
+  port: 8765
+# 下面几个是自定义的，rsa也是自定义的
+rsa:
+  key:
+    pubKeyPath: D:\rsa\id_key_rsa.pub
+    priKeyPath: D:\rsa\id_key_rsa

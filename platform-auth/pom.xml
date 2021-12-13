@@ -22,6 +22,9 @@
     <modules>
         <module>platform-authorization-server</module>
         <module>platform-resource-server</module>
+        <module>platform-jwt-authorization-server</module>
+        <module>platform-jwt-resource-server</module>
+        <module>platform-auth-core</module>
     </modules>
     <dependencyManagement>
         <dependencies>

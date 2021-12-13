@@ -1,0 +1,24 @@
+server:
+  port: 9002
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://101.35.80.154:3306/dynamic?useSSL=false&useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 1234
+
+mybatis:
+  type-aliases-package: com.platform.auth.entity
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com: debug
+
+rsa:
+  key:
+    pubKeyPath: D:\rsa\id_key_rsa.pub
+#资源服务器不应该存在这个
+#    priKeyPath: D:\rsa\id_key_rsa
