@@ -1,13 +1,16 @@
 package com.platform.auth.filter;
 
+import cn.hutool.json.JSONUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.platform.auth.config.AuthCoreConfig;
 import com.platform.auth.config.RsaKeyProperties;
 import com.platform.auth.entity.SysRole;
 import com.platform.auth.entity.SysUser;
 import com.platform.auth.util.JwtUtils;
 import com.platform.common.util.JsonAdaptor;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -41,10 +44,17 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
 
     private AuthenticationManager authenticationManager;
     private RsaKeyProperties rsaKeyProperties;
+    private AuthCoreConfig authCoreConfig;
 
     public JwtLoginFilter(AuthenticationManager authenticationManager, RsaKeyProperties rsaKeyProperties) {
         this.authenticationManager = authenticationManager;
         this.rsaKeyProperties = rsaKeyProperties;
+    }
+
+    public JwtLoginFilter(AuthenticationManager authenticationManager, RsaKeyProperties rsaKeyProperties,AuthCoreConfig authCoreConfig) {
+        this.authenticationManager = authenticationManager;
+        this.rsaKeyProperties = rsaKeyProperties;
+        this.authCoreConfig = authCoreConfig;
     }
 
     /**
@@ -95,7 +105,7 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         SysUser sysUser = new SysUser();
         sysUser.setUsername(authResult.getName());
         sysUser.setRoles((List<SysRole>) authResult.getAuthorities());
-        String token = JwtUtils.generateTokenExpireInMinutes(sysUser,rsaKeyProperties.getPrivateKey(),24*60);
+        String token = JwtUtils.generateTokenExpireInMinutes(sysUser,rsaKeyProperties.getPrivateKey(),authCoreConfig.getTokenExpire());
         response.addHeader("Authorization", "AixPlatformToken " + token);
         try {
             //登录成功时，返回json格式进行提示
@@ -111,5 +121,29 @@ public class JwtLoginFilter extends UsernamePasswordAuthenticationFilter {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+    }
+
+    /**
+     * 一旦调用 springSecurity认证失败 ，立即执行该方法
+     */
+    @Override
+    protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response, AuthenticationException ex) throws IOException {
+        //登录失败时，返回json格式进行提示
+        Map<String, Object> map = new HashMap<String, Object>(4);
+        response.setContentType("application/json;charset=utf-8");
+        response.setStatus(HttpServletResponse.SC_BAD_GATEWAY);
+        PrintWriter out = response.getWriter();
+        if (ex instanceof BadCredentialsException) {
+            map.put("code", HttpServletResponse.SC_BAD_GATEWAY);
+            map.put("message", "账号或密码错误！");
+        }else {
+            // 这里还有其他的 异常 。。 比如账号锁定  过期 等等。。。
+            map.put("code", HttpServletResponse.SC_BAD_GATEWAY);
+            map.put("message", "登陆失败！");
+        }
+        out.write(new ObjectMapper().writeValueAsString(map));
+        response.getWriter().println(JSONUtil.parse(map));
+        response.getWriter().flush();
+        response.getWriter().close();
     }
 }

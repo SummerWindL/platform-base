@@ -21,4 +21,4 @@ rsa:
   key:
     pubKeyPath: D:\rsa\id_key_rsa.pub
 #资源服务器不应该存在这个
-#    priKeyPath: D:\rsa\id_key_rsa
+    priKeyPath: D:\rsa\id_key_rsa

@@ -11,9 +11,9 @@ import java.security.PublicKey;
  * @author Advance
  * @date 2020/8/9 23:49
  */
-@Data
-@ConfigurationProperties("rsa.key")     //指定配置文件的key
-public class RsaKeyProperties {
+//@Data
+//@ConfigurationProperties("rsa.key")     //指定配置文件的key
+/*public class RsaKeyProperties {
 
     private String pubKeyPath;
 
@@ -23,4 +23,4 @@ public class RsaKeyProperties {
     public void createKey() throws Exception {
         this.publicKey = RsaUtils.getPublicKey(pubKeyPath);
     }
-}
+}*/

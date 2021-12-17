@@ -1,10 +1,10 @@
 package com.platform.auth.util;
 
 import com.platform.auth.entity.Payload;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.Jws;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import com.platform.auth.enums.ResultCodeEnum;
+import com.platform.auth.exception.JwtApiException;
+import io.jsonwebtoken.*;
+import lombok.extern.slf4j.Slf4j;
 import org.joda.time.DateTime;
 
 import java.security.PrivateKey;
@@ -16,6 +16,7 @@ import java.util.UUID;
  * @author: advance
  * 生成token以及校验token相关方法
  */
+@Slf4j
 public class JwtUtils {
 
     private static final String JWT_PAYLOAD_USER_KEY = "user";
@@ -62,7 +63,17 @@ public class JwtUtils {
      * @return Jws<Claims>
      */
     private static Jws<Claims> parserToken(String token, PublicKey publicKey) {
-        return Jwts.parser().setSigningKey(publicKey).parseClaimsJws(token);
+        try {
+            return Jwts.parser().
+                    setSigningKey(publicKey).
+                    parseClaimsJws(token);
+        } catch (ExpiredJwtException e) {
+            log.error("token=[{}]，过期", token, e);
+            throw new JwtApiException(ResultCodeEnum.JWT_EXPIRED.code(), ResultCodeEnum.JWT_EXPIRED.message());
+        } catch (SignatureException e) {
+            log.error("token=[{}], 签名", token, e);
+            throw new JwtApiException(ResultCodeEnum.JWT_SIGNATURE.code(), ResultCodeEnum.JWT_SIGNATURE.message());
+        }
     }
 
     private static String createJTI() {
@@ -78,7 +89,13 @@ public class JwtUtils {
      */
     public static <T> Payload<T> getInfoFromToken(String token, PublicKey publicKey, Class<T> userType) {
         Jws<Claims> claimsJws = parserToken(token, publicKey);
-        Claims body = claimsJws.getBody();
+        Claims body = null;
+        try{
+            body = claimsJws.getBody();
+        }catch (Exception e){
+            log.error("token=[{}]解析错误 message:{}", token, e.getMessage(), e);
+            throw new JwtApiException(ResultCodeEnum.JWT_ERROR.code(), ResultCodeEnum.JWT_ERROR.message());
+        }
         Payload<T> claims = new Payload<>();
         claims.setId(body.getId());
         claims.setUserInfo(JsonUtils.toBean(body.get(JWT_PAYLOAD_USER_KEY).toString(), userType));

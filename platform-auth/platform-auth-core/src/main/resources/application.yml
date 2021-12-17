@@ -5,3 +5,5 @@ rsa:
   key:
     pubKeyPath: D:\rsa\id_key_rsa.pub
     priKeyPath: D:\rsa\id_key_rsa
+auth:
+  token-expire: 10

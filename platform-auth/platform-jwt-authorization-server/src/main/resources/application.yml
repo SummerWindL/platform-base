@@ -14,11 +14,28 @@ mybatis:
     map-underscore-to-camel-case: true
 
 logging:
+  file: logs/platform-auth-framework.log
   level:
-    com: debug
+    root: INFO
+    com:
+      platform: DEBUG
+    org:
+      springframework:
+        data:
+          mongodb:
+            core: WARN
+      # 获取到请求参数
+      hibernate:
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
 
 # 下面几个是自定义的，rsa也是自定义的
 rsa:
   key:
     pubKeyPath: D:\rsa\id_key_rsa.pub
     priKeyPath: D:\rsa\id_key_rsa
+
+auth:
+  token-expire: 10

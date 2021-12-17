@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.platform.auth.config.RsaKeyProperties;
 import com.platform.auth.entity.SysUser;
 import com.platform.auth.util.JwtUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -38,28 +39,17 @@ public class JwtVerifyFilter extends BasicAuthenticationFilter {
             throws IOException, ServletException {
         String header = request.getHeader("Authorization");
 
-        //没有登录
-        if (header == null || !header.startsWith("AixPlatformToken ")) {
-            chain.doFilter(request, response);
-            response.setContentType("application/json;charset=utf-8");
-            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
-            PrintWriter out = response.getWriter();
-            Map<String, Object> map = new HashMap<String, Object>(4);
-            map.put("code", HttpServletResponse.SC_FORBIDDEN);
-            map.put("message", "请登录！");
-            out.write(new ObjectMapper().writeValueAsString(map));
-            out.flush();
-            out.close();
-            return;
+        if (header != null && header.startsWith("AixPlatformToken ")) {
+            //登录之后从token中获取用户信息
+            String token = header.replace("AixPlatformToken ","");
+            SysUser sysUser = JwtUtils.getInfoFromToken(token, rsaKeyProperties.getPublicKey(), SysUser.class).getUserInfo();
+            if (sysUser != null) {
+                Authentication authResult = new UsernamePasswordAuthenticationToken
+                        (sysUser.getUsername(),null,sysUser.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(authResult);
+                chain.doFilter(request, response);
+            }
         }
-        //登录之后从token中获取用户信息
-        String token = header.replace("AixPlatformToken ","");
-        SysUser sysUser = JwtUtils.getInfoFromToken(token, rsaKeyProperties.getPublicKey(), SysUser.class).getUserInfo();
-        if (sysUser != null) {
-            Authentication authResult = new UsernamePasswordAuthenticationToken
-                    (sysUser.getUsername(),null,sysUser.getAuthorities());
-            SecurityContextHolder.getContext().setAuthentication(authResult);
-            chain.doFilter(request, response);
-        }
+        chain.doFilter(request, response);
     }
 }
