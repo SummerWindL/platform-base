@@ -35,7 +35,7 @@
         <servletapi.version>3.1.0</servletapi.version>
         <commons.lang3.version>3.6</commons.lang3.version>
         <poi.version>3.15</poi.version>
-        <spring.boot.version>2.5.4</spring.boot.version>
+        <spring.boot.version>2.5.12</spring.boot.version>
     </properties>
     <dependencyManagement>
         <dependencies>
