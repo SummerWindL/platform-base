@@ -1,5 +1,8 @@
 com\lemon\common\http\HttpUtil$1.class
 com\lemon\common\http\HttpUtil$HttpResponseWrapper.class
+com\lemon\common\http\HttpTests$1.class
 com\lemon\common\http\HttpUtil$2.class
 com\lemon\common\http\HttpUtil$3.class
+com\lemon\common\http\HttpTests.class
 com\lemon\common\http\HttpUtil.class
+com\lemon\common\http\ItTests.class

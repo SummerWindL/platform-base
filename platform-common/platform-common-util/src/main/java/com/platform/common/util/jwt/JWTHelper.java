@@ -8,8 +8,8 @@ import org.joda.time.DateTime;
 /**
  * JWT Token 帮助类
  *
- * @ClassName        : JWTHelper
- * @author            : Advance
+ * @author : Advance
+ * @ClassName : JWTHelper
  * @date : 2017年12月21日 下午2:58:32
  */
 public class JWTHelper {

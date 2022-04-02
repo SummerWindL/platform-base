@@ -7,8 +7,8 @@ import lombok.ToString;
 import java.io.Serializable;
 
 /**
- * @ClassName        : JWTInfo
- * @author            : Advance
+ * @author : Advance
+ * @ClassName : JWTInfo
  * @date : 2017年12月21日 下午3:05:19
  */
 @ToString

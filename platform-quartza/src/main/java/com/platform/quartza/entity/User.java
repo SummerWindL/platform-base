@@ -1,5 +1,6 @@
 package com.platform.quartza.entity;
 
+import com.platform.core.base.BaseEntity;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
@@ -16,7 +17,7 @@ import javax.persistence.Table;
 @Data
 @Setter
 @Getter
-public class User {
+public class User extends BaseEntity {
     @Id
     private Long userId;
     private String userName;

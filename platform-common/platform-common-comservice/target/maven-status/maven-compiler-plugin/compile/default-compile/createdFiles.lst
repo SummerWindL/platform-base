@@ -2,5 +2,5 @@ com\platform\comservice\config\BeanAutowiredConfig.class
 com\platform\comservice\service\TencentMiniProApiService.class
 com\platform\comservice\PlatformComServiceApplication.class
 com\platform\comservice\config\ComServiceProperties.class
-com\platform\comservice\bean\Auth.class
 com\platform\comservice\service\impl\TencentMiniProApiServiceImpl.class
+com\platform\comservice\bean\Auth.class

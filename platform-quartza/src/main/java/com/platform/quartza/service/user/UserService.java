@@ -7,6 +7,7 @@ import com.platform.quartza.mapper.UserMapper;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
+import java.util.Map;
 
 /**
  * @author: Advance
@@ -25,5 +26,9 @@ public class UserService {
 
     public Page<User> getUsers() {
         return userMapper.getUsers();
+    }
+
+    public Page<User> getUserByUserId(Map<String,Object> params){
+        return userMapper.getUserByUserId(params);
     }
 }

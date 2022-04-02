@@ -1,6 +1,5 @@
 package com.platform.core.activiti.config;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -9,6 +8,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Collection;
 
 /**
@@ -18,7 +18,7 @@ import java.util.Collection;
  */
 @Component
 public class SecurityUtil {
-    @Autowired
+    @Resource
     private UserDetailsService userDetailsService;
 
     public void logInAs(String username) {

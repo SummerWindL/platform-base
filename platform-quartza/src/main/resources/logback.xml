@@ -122,6 +122,9 @@
         <appender-ref ref="access"/>
     </logger>-->
 
+    <!-- 开启或者关闭sql输出:WARN以上为关闭 -->
+    <logger name="com.platform.data.jdbc.plugin.SqlLogInterceptor" level="DEBUG" />
+
     <root level="DEBUG">
         <appender-ref ref="console"/>
         <appender-ref ref="error"/>

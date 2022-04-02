@@ -10,5 +10,8 @@
     <select id="getUsers" resultMap="BaseResultMap">
         select * from tbl_user
     </select>
+    <select id="getUserByUserId" resultMap="BaseResultMap">
+        select * from tbl_user where user_id = #{userId,jdbcType = INTEGER}
+    </select>
 
 </mapper>

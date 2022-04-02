@@ -96,6 +96,42 @@
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
             <version>3.4.1</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.guoyixing</groupId>
+            <artifactId>spring-boot-starter-super-scheduled</artifactId>
+            <version>0.3.4</version>
+            <!--排除这个slf4j-log4j12-->
+            <exclusions>
+                <exclusion>
+                    <groupId>org.slf4j</groupId>
+                    <artifactId>slf4j-log4j12</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <scope>test</scope>
+            <version>4.12</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.junit.vintage</groupId>
+                    <artifactId>junit-vintage-engine</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>com.lemon</groupId>
+            <artifactId>platform-data</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
 
     <build>

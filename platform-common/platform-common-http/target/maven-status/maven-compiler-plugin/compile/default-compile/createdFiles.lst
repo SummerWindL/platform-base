@@ -1,0 +1,10 @@
+com\lemon\common\http\generator\ParamsGenerator.class
+com\lemon\common\http\client\HttpResponseWrapper.class
+com\lemon\common\http\client\impl\ApacheHttpClientServiceImpl$1.class
+com\lemon\common\http\client\impl\ApacheHttpClientServiceImpl$3.class
+com\lemon\common\http\HttpApplication.class
+com\lemon\common\http\client\impl\ApacheHttpClientServiceImpl.class
+com\lemon\common\http\generator\ApiParamsGenerator.class
+com\lemon\common\http\client\HttpClientService.class
+com\lemon\common\http\client\impl\ApacheHttpClientServiceImpl$2.class
+com\lemon\common\http\config\HttpAutoConfiguration.class

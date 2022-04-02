@@ -8,8 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @ClassName        : IPUtils
- * @author            : Advance
+ * @author : Advance
+ * @ClassName : IPUtils
  * @date : 2017年9月25日 下午2:20:15
  */
 public class IPUtils {

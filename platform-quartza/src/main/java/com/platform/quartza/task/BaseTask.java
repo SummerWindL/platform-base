@@ -49,7 +49,7 @@ public class BaseTask {
     /**
      * 固定延迟3秒，从前一次任务结束开始计算，延迟3秒执行
      */
-    //@Scheduled(fixedDelay = 3000)
+    @Scheduled(fixedDelay = 3000)
     public void task3(){
         //do something
     }
@@ -63,7 +63,7 @@ public class BaseTask {
     }
 
 
-    @Scheduled(fixedRate = 3 * SECOND)
+    //@Scheduled(fixedRate = 3 * SECOND)
     public void test3() {
         BasePostgreResponse basePostgreResponse = postgreSqlNotifyService.pgNotifyTest();
 

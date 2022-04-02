@@ -14,6 +14,116 @@ import java.util.Date;
 public class DateUtil {
 
     /**
+     * 中文日期格式 :"yyyy年MM月dd日"
+     */
+    public static final String DEFAULT_DATE_FORMAT_CN = "yyyy年MM月dd日";
+
+    /**
+     * 中文日期格式 :"yyyy年MM月"
+     */
+    public static final String DEFAULT_MONTH_DATE_FORMAT_CN = "yyyy年MM月";
+
+    /**
+     * 中文日期格式:"yyyy年M月"
+     */
+    public static final String MONTH_DATE_FORMAT_CN = "yyyy年M月";
+
+    /**
+     * 中文日期格式:"yyyy年M月d日"
+     */
+    public static final String ABB_DATE_FORMAT_CN = "yyyy年M月d日";
+
+    /**
+     * 标准的日期格式 :"yyyy-MM-dd"
+     */
+    public static final String DEFAULT_DATE_FORMAT_EN = "yyyy-MM-dd";
+
+    /**
+     * 标准的日期格式 :"yyyy-MM"
+     */
+    public static final String MONTH_DATE_FORMAT_EN = "yyyy-MM";
+
+    /**
+     * 到毫秒日期格式 :"yyyyMMddHHmmssSSS"
+     */
+    public static final String DATETIME_FORMAT_WITH_SSS_YEAR1 = "yyyyMMddHHmmssSSS";
+
+    /**
+     * 到毫秒日期格式 :"yyMMddHHmmssSSS"
+     */
+    public static final String DATETIME_FORMAT_WITH_SSS_YEAR2 = "yyMMddHHmmssSSS";
+
+    /**
+     * "yyyy-MM-dd HH:mm:ss"
+     */
+    public static final String DEFAULT_DATETIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
+
+    /**
+     * "yyyy_MM_dd_HH_mm_ss_SSS" 用做文件名
+     */
+    public static final String DEFAULT_DATETIME_FORMAT_SSS = "yyyy_MM_dd_HH_mm_ss_SSS";
+
+    /**
+     * "yyyyMMdd"
+     */
+    public static final String DEFAULT_OTHER_FORMAT = "yyyyMMdd";
+
+    /**
+     * "yyyy/MM/dd"
+     */
+    public static final String DEFAULT_ANOTHER_FORMAT = "yyyy/MM/dd";
+
+    /**
+     * dd-yy月-yyyy
+     */
+    public static final String DEFAULT_FOREI_FORMAT = "dd-MM月-yyyy";
+
+    /**
+     * "yyyyMM"
+     */
+    public static final String MONTH_OTHER_FORMAT = "yyyyMM";
+
+    /**
+     * "yyyy"
+     */
+    public static final String YEAR_DATE_FORMAT_EN = "yyyy";
+
+    /**
+     * "yyyyMMdd HH:mm:ss"
+     */
+    public static final String DEFAULT_DATETIME_FORMAT_ODS = "yyyyMMdd HH:mm:ss";
+
+    /**
+     * 期间类型
+     */
+    public enum DurationType {
+        /**
+         *
+         */
+        秒,
+        /**
+         *
+         */
+        分钟,
+        /**
+         *
+         */
+        小时,
+        /**
+         *
+         */
+        天,
+        /**
+         *
+         */
+        月,
+        /**
+         *
+         */
+        年;
+    }
+
+    /**
      * 获得当前日期时间
      * <p>
      * 日期时间格式yyyy-MM-dd HH:mm:ss

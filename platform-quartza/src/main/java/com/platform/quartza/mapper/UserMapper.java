@@ -6,6 +6,8 @@ import com.github.pagehelper.Page;
 import com.platform.quartza.base.repo.BaseMapper;
 import com.platform.quartza.entity.User;
 
+import java.util.Map;
+
 /**
  * @author Advance
  * @date 2021年12月03日 17:00
@@ -14,4 +16,6 @@ import com.platform.quartza.entity.User;
 @DS("master")
 public interface UserMapper extends BaseMapper<User> {
     Page<User> getUsers();
+
+    Page<User> getUserByUserId(Map<String,Object> params);
 }

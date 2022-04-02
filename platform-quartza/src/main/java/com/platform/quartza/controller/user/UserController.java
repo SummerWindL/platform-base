@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * @author Advance
@@ -33,6 +35,17 @@ public class UserController {
     public PageInfo<User> lists(@RequestParam(defaultValue = "1") int pageNo, @RequestParam(defaultValue = "10") int pageSize) {
         PageHelper.startPage(pageNo,pageSize);
         PageInfo<User> pageInfo = new PageInfo<>(userService.getUsers());
+        return pageInfo;
+    }
+
+    @GetMapping("/users/getUser/{userId}")
+    public PageInfo<User> getUser(@RequestParam(defaultValue = "1") int pageNo,
+                                  @RequestParam(defaultValue = "10") int pageSize,
+                                  @PathVariable("userId") int userId){
+        PageHelper.startPage(pageNo,pageSize);
+        Map<String,Object> params = new HashMap<String,Object>();
+        params.put("userId",userId);
+        PageInfo<User> pageInfo = new PageInfo<>(userService.getUserByUserId(params));
         return pageInfo;
     }
 

@@ -1,6 +1,25 @@
 server:
   port: 8097
 spring:
+  supper:
+    scheduled:
+      thread-pool:
+        poolSize: 30 #线程池大小
+        threadNamePrefix: super #线程名前缀
+        waitForTasksToCompleteOnShutdown: false #设置是否关闭时等待执行中的任务执行完成
+        #设置此执行器被关闭时等待的最长时间，用于在其余容器继续关闭之前等待剩余任务执行完成
+        #需要将waitForTasksToCompleteOnShutdown设置为true，此配置才起作用
+        awaitTerminationSeconds: 0
+      plug-in:
+        executionFlag: true #开启执行标志
+        executionLog: true #开启定时任务调度日志，日志文件是存在本地磁盘上的
+        logPath: E:/tmp/log-scheduled #日志存放位置，不设置默认位置为程序同级目录下
+        colony: true #开启基于zookeeper的集群模式
+        colonyName: test #zookeeper集群模式的定时任务服务名，相同名称的定时任务名称服务会被统一管理
+      zookeeper:
+        url: 127.0.0.1:2181 #设置zookeeper地址，zookeeper集群多个地址用英文逗号隔开
+        sessionTimeout: 60000 #设置zookeeper session超时时间
+        connectionTimeout: 60000 #设置zookeeper连接超时时间
   jpa:
     show-sql: true
     # 格式化输出sql
@@ -39,8 +58,9 @@ mapper:
 mybatis:
   type-aliases-package: com.platform.quartza.entity
   mapper-locations: classpath:mapper/*.xml
-  configuration:
-    map-underscore-to-camel-case: true
+  config-location: classpath:mybatis.xml
+#  configuration:
+#    map-underscore-to-camel-case: true
 
 pagehelper:
   helper-dialect: mysql

@@ -1,0 +1,7 @@
+server:
+  port: 9999
+
+magic-api:
+  web: /magic/web
+  resource:
+    location: /data/magic-api
