@@ -1,3 +1,7 @@
+com\platform\comservice\useful\Balance.class
 com\platform\comservice\PlatformComServiceApplicationTests.class
+com\platform\comservice\strategy\SimpleStrategyDemo.class
+com\platform\comservice\useful\LongAccumulatorTest.class
 com\platform\comservice\miniprogramcode\CodeGenerator$Auth.class
 com\platform\comservice\miniprogramcode\CodeGenerator.class
+com\platform\comservice\useful\StampedLockTest.class

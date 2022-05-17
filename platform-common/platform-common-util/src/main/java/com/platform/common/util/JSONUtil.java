@@ -149,6 +149,7 @@ public class JSONUtil {
             return new HashMap<String, Object>();
         }
     }
+
     /**
      * JSON转对象
      * @param jsonNode JSON
@@ -237,55 +238,6 @@ public class JSONUtil {
         }
         return jsonNode;
     }
-//
-//    /**
-//     * @param map map对象
-//     * @param beanClass 目标类型
-//     * @return Object
-//     * @throws Exception 异常
-//     */
-//    @SuppressWarnings("unchecked")
-//    public static Object map2entity(Map<String, Object> map, Class<?> beanClass)
-//        throws Exception {
-//
-//        Object newEntity = beanClass.newInstance();
-//
-//        Field[] fields = newEntity.getClass().getDeclaredFields();
-//        for (Field field : fields) {
-//            int mod = field.getModifiers();
-//            if (Modifier.isStatic(mod) || Modifier.isFinal(mod)) {
-//                continue;
-//            }
-//            String className = field.getType().getName();
-//            Object value = map.get(field.getName());
-//            field.setAccessible(true);
-//            if (className.equalsIgnoreCase("java.util.List")) { // 处理List类型
-//                ParameterizedType type = (ParameterizedType)field.getGenericType();
-//                Type subType = type.getActualTypeArguments()[0];
-//                if (value instanceof List
-//                    && subType.getTypeName().startsWith("com.joyintech")) {
-//                    List<Object> array = new ArrayList<>();
-//                    List<Map<String, Object>> valueList = (ArrayList<Map<String, Object>>)value;
-//                    for (Map<String, Object> temp : valueList) {
-//                        array.add(map2entity(temp, Class.forName(subType.getTypeName())));
-//                    }
-//                    field.set(newEntity, array);
-//                    map.remove(field.getName());
-//                }
-//            } // 以com.joyintech.tams开头的，则可以判断为自定义对象
-//            else if (className.startsWith("com.joyintech")) {
-//                if (value instanceof Map) {
-//                    field.set(newEntity,
-//                        map2entity((Map<String, Object>)value, Class.forName(className)));
-//                    map.remove(field.getName());
-//                }
-//            }
-//        }
-//
-//        BeanUtil.copyPropertiesIgnoreNull(newEntity, BeanUtil.mapToObject(map, beanClass));
-//
-//        return newEntity;
-//    }
 
     /**
      * 将对象串格式化为JSON字符串

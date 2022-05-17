@@ -2,7 +2,7 @@ logging:
   level:
     root: INFO
     com:
-      lemon: DEBUG
+      platform: DEBUG
   file:
     name: logs/platform-common-comservice.log
 

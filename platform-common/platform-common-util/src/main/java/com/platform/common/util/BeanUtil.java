@@ -1,9 +1,3 @@
-/*
-
- * 文件名：BeanUtil.java 版权：Copyright 2016-2017 JoyinTech. Co. Ltd. All Rights Reserved. 描述：中信银行资管系统
- * 修改人：何阳阳 修改时间：2016年10月21日 修改内容：新建 系统名称：中信银行资管系统
- */
-
 package com.platform.common.util;
 
 import org.apache.commons.beanutils.BeanMap;
@@ -18,7 +12,7 @@ import java.lang.reflect.Modifier;
 import java.util.*;
 
 /**
- * @author 何阳阳
+ * @author Advance
  * @version 1.0 2016年10月21日
  * @since 1.0
  */
