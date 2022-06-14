@@ -280,6 +280,11 @@ public interface GlobalConstant {
     String COM_PROP_UPLOAD_PATH = "upload_file_path";
 
     /**
+     * 共通Propert属性--输出文件路径
+     */
+    String COM_PROP_OUTPUT_PATH = "output_file_path";
+
+    /**
      * 工作流提交审批是否需要发邮件
      */
     String IS_MAIL_SEND_WORKFLOW = "is_mail_send_workflow";

@@ -1,0 +1,3 @@
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+com.platform.comservice.config.BeanAutowiredConfig,\
+com.platform.comservice.config.StarterAutoConfigure
