@@ -13,7 +13,6 @@ import org.apache.commons.lang3.StringUtils;
  * @date : 2017年9月25日 下午2:20:15
  */
 public class IPUtils {
-
     /**
      * 根据request获取ip地址
      *

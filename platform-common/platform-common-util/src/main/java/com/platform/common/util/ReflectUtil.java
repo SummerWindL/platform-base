@@ -1,5 +1,7 @@
 package com.platform.common.util;
 
+import com.google.common.collect.ImmutableList;
+
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -17,6 +19,7 @@ public class ReflectUtil {
      * @since 1.0
      */
     public static Field[] getDeclaredFields(Object object) {
+        List<String> list7 = ImmutableList.of("money", "study", "health");
         List<Field> fieldList = new ArrayList<>();
         Set<String> names = new HashSet<>();
         Class<?> clazz = object.getClass();

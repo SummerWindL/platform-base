@@ -1,26 +1,27 @@
-package com.platform.common.util;
+package com.platform.core.util;
+
+import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 import org.apache.commons.beanutils.BeanMap;
 import org.apache.commons.beanutils.BeanUtils;
-import org.apache.commons.collections4.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanWrapper;
 import org.springframework.beans.BeanWrapperImpl;
 
-import java.beans.BeanInfo;
-import java.beans.Introspector;
-import java.beans.PropertyDescriptor;
-import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
-import java.util.*;
 
 /**
  * @author Advance
- * @version 1.0 2016年10月21日
- * @since 1.0
+ * @date 2022年07月17日 12:05
+ * @since V1.0.0
  */
-public final class BeanUtil extends BeanUtils {
+public class BeanUtil extends BeanUtils {
 
     /**
      *
@@ -58,7 +59,6 @@ public final class BeanUtil extends BeanUtils {
         return null;
     }
 
-
     /**
      * 采用反射将map转为object
      *
@@ -69,7 +69,7 @@ public final class BeanUtil extends BeanUtils {
      * @throws IllegalAccessException 异常
      */
     private static Object map2Object(Map<String, Object> map, Class<?> beanClass)
-        throws InstantiationException, IllegalAccessException {
+            throws InstantiationException, IllegalAccessException {
         if (map == null) {
             return null;
         }
@@ -85,13 +85,13 @@ public final class BeanUtil extends BeanUtils {
                 Object value = map.get(field.getName());
                 if(null != value) {
                     if(field.getType().equals(Date.class)){
-                        field.set(obj,DateUtil.parseDate(value.toString()));
+                        field.set(obj,DateUtil.parse(value.toString()));
                     }
                     else if(field.getType().equals(String.class)){
                         field.set(obj,value.toString());
                     }
                     else{
-                        field.set(obj,JSONUtil.json2Object(value.toString(), field.getType()) );
+                        field.set(obj,JsonUtils.json2Object(value.toString(), field.getType()) );
                     }
                 }
                 else {
@@ -104,61 +104,6 @@ public final class BeanUtil extends BeanUtils {
         }
 
         return obj;
-    }
-
-    public static <T> List<T> convertMap2Bean(List<Map<String, Object>> map, Class<T> T) {
-        List<T> result = null;
-        if (CollectionUtils.isEmpty(map)){
-            return result;
-        }
-
-        if (CollectionUtils.isNotEmpty(map)){
-            result = new ArrayList<>();
-            for (int i = 0; i < map.size(); i++) {
-                result.add(BeanUtil.convertMap2Bean(map.get(i), T));
-            }
-        }
-        return result;
-    }
-
-    public static <T> T convertMap2Bean(Map<String, Object> map, Class<T> T) {
-        if (map == null || map.size() == 0) {
-            return null;
-        }
-        //获取map中所有的key值，全部更新成大写，添加到keys集合中,与mybatis中驼峰命名匹配
-        Object mvalue = null;
-        Map<String, Object> newMap = new HashMap<>();
-        Iterator<Map.Entry<String, Object>> it = map.entrySet().iterator();
-        while (it.hasNext()) {
-            String key = it.next().getKey();
-            mvalue = map.get(key);
-      /*  if (key.indexOf(CharacterConstant.UNDERLINE) != -1)
-        {
-            key = key.replaceAll(CharacterConstant.UNDERLINE, "");
-        }*/
-            newMap.put(key.toUpperCase(Locale.US), mvalue);
-        }
-
-        T bean = null;
-        try {
-            BeanInfo beanInfo = Introspector.getBeanInfo(T);
-            bean = T.newInstance();
-            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-            for (int i = 0, n = propertyDescriptors.length; i < n; i++) {
-                PropertyDescriptor descriptor = propertyDescriptors[i];
-                String propertyName = descriptor.getName();
-                String upperPropertyName = propertyName.toUpperCase();
-
-                if (newMap.keySet().contains(upperPropertyName)) {
-                    Object value = newMap.get(upperPropertyName);
-                    //这个方法不会报参数类型不匹配的错误。
-                    BeanUtils.copyProperty(bean, propertyName, value);
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return bean;
     }
 
     /**
@@ -198,8 +143,7 @@ public final class BeanUtil extends BeanUtils {
 
     /**
      * Copy the property values of the given source bean into the given target bean, ignoring the
-     * null value properties.<br />
-     * 警告：无法忽略嵌套集合、类中的子属性为null的情况，仍将这些子属性的null复制到目标类 by JIAOXUJIN
+     * null value properties.
      *
      * @param dest 目标对象
      * @param orig 原对象
@@ -227,11 +171,6 @@ public final class BeanUtil extends BeanUtils {
             if (StringUtil.equals(pd.getName(), "workflowParameter")) {
                 continue;
             }
-/*            if (Collection.class.isAssignableFrom(pd.getPropertyType()) || 
-                Map.class.isAssignableFrom(pd.getPropertyType()) || pd.getPropertyType().isArray()) {
-                continue;
-            }*/
-
             Object srcValue = src.getPropertyValue(pd.getName());
             if (srcValue == null) {
                 emptyNames.add(pd.getName());
@@ -240,5 +179,4 @@ public final class BeanUtil extends BeanUtils {
         String[] result = new String[emptyNames.size()];
         return emptyNames.toArray(result);
     }
-
 }

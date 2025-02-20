@@ -1,4 +1,4 @@
-package com.platform.common.util;
+package com.platform.core.util;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -10,23 +10,18 @@ import java.time.Period;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalAccessor;
-import java.time.temporal.TemporalQueries;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Random;
 
-import com.platform.common.util.StringUtil;
 import org.apache.commons.lang3.time.DateUtils;
 
 
 /**
- * 日期处理工具类
- * @version 1.0 2018年1月16日
- * @see DateUtil
- * @since 1.0
+ * @author Advance
+ * @date 2022年07月17日 11:42
+ * @since V1.0.0
  */
-public class DateUtil extends DateUtils {
+public class DateUtil  extends DateUtils {
 
     /**
      * 中文日期格式 :"yyyy年MM月dd日"
@@ -1059,59 +1054,4 @@ public class DateUtil extends DateUtils {
         return day_of_week;
     }
 
-    /**
-     * 将字符串日期时间转换成java.util.Date类型
-     * <p>
-     * 日期时间格式yyyy-MM-dd HH:mm:ss
-     *
-     * @param datetime
-     * @return
-     */
-    public static Date parseDatetime(String datetime) {
-        return DateTimeUtil.parseDatetime(datetime).toDate();
-    }
-    /**
-     * 根据自定义pattern将字符串日期转换成java.util.Date类型
-     *
-     * @param datetime
-     * @param pattern
-     * @return
-     * @throws ParseException
-     */
-    public static Date parseDatetime(String datetime, String pattern) throws ParseException {
-        return DateTimeUtil.parseDatetime(datetime, pattern).toDate();
-    }
-
-    /**
-     * 格式化日期
-     * <p>
-     * 日期格式yyyy-MM-dd
-     *
-     * @return
-     */
-    public static String formatDate(Date date) {
-        return DateTimeUtil.formatDate(date);
-    }
-
-    /**
-     *
-     * @Description:获取随机数.
-     * @param lenght length必须大于10
-     * @return  String
-     * @exception:
-     * @author: Administrator
-     * @time:2018年1月26日 下午6:50:50
-     */
-    public static String getDateRandom(int lenght){
-        String  random = "";
-        Random ran=new java.util.Random();
-        random = System.currentTimeMillis()+"";
-        if(lenght>=13){
-            random += ran.nextInt((int) Math.pow(10, lenght-13));
-        }else{
-            random = random.substring(13-lenght, random.length());
-        }
-
-        return random;
-    }
 }

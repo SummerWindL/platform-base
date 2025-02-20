@@ -30,12 +30,12 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>com.lemon</groupId>
             <artifactId>platform-core</artifactId>
             <version>1.0</version>
             <scope>compile</scope>
-        </dependency>
+        </dependency>-->
 
         <!-- json -->
         <dependency>
@@ -169,6 +169,18 @@
             <groupId>com.thoughtworks.xstream</groupId>
             <artifactId>xstream</artifactId>
             <version>1.4.19</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>5.3.7.Final</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>30.0-jre</version>
+            <scope>compile</scope>
         </dependency>
 
         <!--主工程 aix 打包无法获取到当前jar 移动到主工程lib目录下后续处理-->

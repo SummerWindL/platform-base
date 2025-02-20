@@ -1,0 +1,64 @@
+spring:
+  profiles:
+    active: consumer
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    #    url: jdbc:oracle:thin:@//192.168.70.245:1521/orcl
+    #    username: BS303INIT_TEST1008_03
+    #    password: BS303INIT_TEST1008_03
+    #    driverClassName: oracle.jdbc.driver.OracleDriver
+    url: jdbc:postgresql://localhost:5432/postgres?stringtype=unspecified&currentSchema=aix
+    username: postgres
+    password: postgres
+    driverClassName: org.postgresql.Driver # 3.2.0开始支持SPI可省略此配置
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: rbmq
+    password: rbmq
+    publisher-confirms: true
+    publisher-returns: true
+    listener:
+      simple:
+        max-concurrency: 20 #消息最大消费者数量
+        concurrency: 1 #消息最小消费者数量
+        acknowledge-mode: manual #采用手动应答
+        #prefetch: 5
+        retry:
+          enabled: false #支持重试
+    template:
+      retry:
+        enabled: false
+      mandatory: true
+
+---
+server:
+  port: 8081
+spring:
+  profiles: producer
+  application:
+    name: test-rabbitmq-producer
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: rbmq
+    password: rbmq
+    virtualHost: /
+---
+server:
+  port: 8082
+spring:
+  profiles: consumer
+  application:
+    name: test-rabbitmq-consumer
+  rabbitmq:
+    host: localhost
+    port: 5673
+    username: rbmq
+    password: rbmq
+    virtualHost: /
+---
+server:
+  port: 8082
+spring:
+  profiles: consumer2

@@ -6,6 +6,7 @@ package com.platform.core.constant;
  * @since V1.0.0
  */
 public interface GlobalConstant {
+    String SYS = "SYS";
     /**
      * 数据权限用户机构代码
      */
