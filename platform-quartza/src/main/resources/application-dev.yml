@@ -32,9 +32,9 @@ spring:
       strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
       datasource:
         master:
-          url: jdbc:mysql://101.35.80.154:3306/dynamic?useSSL=false
+          url: jdbc:mysql://127.0.0.1:3306/aix?user=username&password=password&allowPublicKeyRetrieval=true&useSSL=false&serverTimezone=UTC&defaultAuthenticationPlugin=mysql_native_password
           username: root
-          password: 1234
+          password: root123
           driver-class-name:  com.mysql.cj.jdbc.Driver # 3.2.0开始支持SPI可省略此配置
         slave_1:
           url: jdbc:postgresql://101.35.80.154:5432/aix_db?stringtype=unspecified&currentSchema=aix

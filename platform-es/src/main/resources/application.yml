@@ -1,0 +1,18 @@
+server:
+  port: 8081
+spring:
+  application:
+    name: platform-es
+  main:
+    allow-bean-definition-overriding: true # 存在repo相同的情况 原phis的存储过程与aigw重名
+    allow-circular-references: true # 允许循环依赖
+  profiles:
+    include:
+      - es # es配置
+      - kafka
+      - sharding  # spring-jpa 分库分表 案例 入口 OrderTest
+#      - rmdb     # mybatis-plus 分库分表案例 入口 DataImportTest
+# 日志彩色输出
+  output:
+    ansi:
+      enabled: always

@@ -1,0 +1,25 @@
+spring:
+  shardingsphere:
+    datasource:
+      names: ds0
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds0?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: root123
+    sharding:
+      # 分表策略（根据user_id取模分2张表）
+      tables:
+        user:
+          actual-data-nodes: ds0.user_$->{0..1}
+          table-strategy:
+            inline:
+              sharding-column: user_id
+              algorithm-expression: user_$->{user_id % 2}
+          key-generator:
+            column: id
+            type: SNOWFLAKE
+    props:
+      sql:
+        show: true

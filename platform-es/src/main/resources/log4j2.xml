@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="INFO">
+    <Appenders>
+        <!-- 输出到控制台 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <!--<PatternLayout pattern="%highlight{%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n}{%style{%d{ISO8601}}{cyan} %style{[%t]}{magenta} %highlight{%-5level}{ERROR=red, WARN=yellow, INFO=green, DEBUG=blue} %style{%logger{36}}{cyan} - %style{%msg}{highlight}%n%throwable{short}}"/>-->
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} %highlight{%6p} %style{%5pid}{bright,magenta} --- [%15.15t] %style{%-40.40logger{39}}{bright,cyan}: %m%n"/>
+        </Console>
+        <!-- 输出到文件（按日期滚动） -->
+        <RollingFile name="File" fileName="logs/app.log"
+                     filePattern="logs/app-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+        <!-- 发送日志到 Logstash（Socket 方式） -->
+        <Socket name="Logstash" host="localhost" port="5044" protocol="TCP">
+            <JsonLayout compact="true" eventEol="true"/>
+        </Socket>
+    </Appenders>
+    <Loggers>
+        <!-- MyBatis Mapper 日志 -->
+        <Logger name="com.platform.es.demo.mapper" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+        </Logger>
+
+        <!-- JDBC 日志（输出 SQL 语句和参数） -->
+        <Logger name="jdbc.sqlonly" level="DEBUG" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Logger name="jdbc.sqltiming" level="INFO" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+        <Root level="INFO">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="File"/>
+            <AppenderRef ref="Logstash"/>
+        </Root>
+    </Loggers>
+</Configuration>

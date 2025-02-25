@@ -71,9 +71,9 @@ public class TaskManagerController {
     private void stopScheduleTask(@PathVariable("taskName") String taskName){
         log.info("需要终止的任务名称：{} ",taskName);
         AssertUtil.notNull(taskName,"任务名称为空！");
-        if(superScheduledManager.isScheduledExists(taskName)) {
-            superScheduledManager.cancelScheduled(taskName);
-        }
+//        if(superScheduledManager.isScheduledExists(taskName)) {
+//            superScheduledManager.cancelScheduled(taskName);
+//        }
     }
 
 }

@@ -1,0 +1,71 @@
+spring:
+  shardingsphere:
+    props:
+      sql:
+        # 打开sql输出日志
+        show: true
+    datasource:
+      # 数据源名称，多数据源以逗号分隔
+      names: ds0,ds1
+      ds0:
+        # 数据库连接池类名称
+        type: com.alibaba.druid.pool.DruidDataSource
+        # 数据库驱动类名
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        # 数据库url连接
+        url: jdbc:mysql://localhost:3306/ds0?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&allowMultiQueries=true&failOverReadOnly=false&connectTimeout=6000&maxReconnects=5
+        # 数据库用户名
+        username: root
+        # 数据库密码
+        password: root123
+      ds1:
+        # 数据库连接池类名称
+        type: com.alibaba.druid.pool.DruidDataSource
+        # 数据库驱动类名
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        # 数据库url连接
+        url: jdbc:mysql://localhost:3306/ds1?serverTimezone=GMT%2B8&characterEncoding=utf8&useUnicode=true&useSSL=false&zeroDateTimeBehavior=CONVERT_TO_NULL&autoReconnect=true&allowMultiQueries=true&failOverReadOnly=false&connectTimeout=6000&maxReconnects=5
+        # 数据库用户名
+        username: root
+        # 数据库密码
+        password: root123
+    sharding:
+      # 未配置分片规则的表将通过默认数据源定位
+      default-data-source-name: ds0
+      tables:
+        tb_order:
+          # 由数据源名 + 表名组成，以小数点分隔。多个表以逗号分隔，支持inline表达式
+          actual-data-nodes: ds$->{0..1}.tb_order_$->{0..1}
+          # 分库策略
+          database-strategy:
+            # 精确分片策略
+            standard:
+              # 分片键
+              sharding-column: user_id
+              # 精确分片算法类名称，用于=和IN
+              precise-algorithm-class-name: com.platform.es.demo.db.DatabasePreciseShardingAlgorithm
+          # 分表策略
+          table-strategy:
+            # 精确分片策略
+            standard:
+              # 分片键
+              sharding-column: order_id
+              # 精确分片算法类名称，用于=和IN
+              precise-algorithm-class-name: com.platform.es.demo.db.OrderTablePreciseShardingAlgorithm
+          # key生成器
+          key-generator:
+            # 自增列名称，缺省表示不使用自增主键生成器
+            column: order_id
+            # 自增列值生成器类型，缺省表示使用默认自增列值生成器（SNOWFLAKE/UUID）
+            type: SNOWFLAKE
+            # SnowflakeShardingKeyGenerator
+            props:
+              # SNOWFLAKE算法的worker.id
+              worker:
+                id: 100
+              # SNOWFLAKE算法的max.tolerate.time.difference.milliseconds
+              max:
+                tolerate:
+                  time:
+                    difference:
+                      milliseconds: 20

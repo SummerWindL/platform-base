@@ -1,0 +1,97 @@
+spring:
+  shardingsphere:
+    # 打印sql
+    props:
+      sql:
+        show: true
+    # 数据源配置
+    datasource:
+      # names必须对应数据库的名字，且与下方配置相对应
+      names: ds0,ds1
+      ds0:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds0?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: root123
+      ds1:
+        type: com.alibaba.druid.pool.DruidDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://localhost:3306/ds1?useUnicode=true&characterEncoding=utf-8&useSSL=false
+        username: root
+        password: root123
+    # 分片规则
+
+    sharding:
+      # 分库策略（根据user_id取模分2个库）
+      default-database-strategy:
+        standard:
+          sharding-column: user_id
+          sharding-algorithm-name: db-inline
+      # 分表策略（根据user_id取模分2张表）
+      tables:
+        user:
+          actual-data-nodes: ds$->{0..1}.user_$->{0..1}
+          table-strategy:
+            standard:
+              sharding-column: user_id
+              sharding-algorithm-name: table-inline
+          key-generate-strategy:
+            column: id
+            key-generator-name: snowflake
+
+      # 分片算法
+      sharding-algorithms:
+        db-inline:
+          type: INLINE
+          props:
+            algorithm-expression: ds$->{user_id % 2}
+        table-inline:
+          type: INLINE
+          props:
+            algorithm-expression: user_$->{user_id % 2}
+
+      # 分布式序列算法（雪花算法）
+      key-generators:
+        snowflake:
+          type: SNOWFLAKE
+      # 默认数据库策略 如果不想分库，可不设此配置
+#      defaultDatabaseStrategy:
+#        # 分库
+#        standard:
+#          # 分片键 zone  表示根据 数据zone这一列的值与自定义的算法进行分片
+#          shardingColumn: zone
+#          # 精准分片算法
+#          preciseAlgorithmClassName: com.platform.es.demo.db.SubDataBasePreciseAlgorithm
+#          # 范围分片算法
+#          rangeAlgorithmClassName: com.platform.es.demo.db.SubDataBaseRangeAlgorithm
+#      # 表策略配置
+#      tables:
+#        # vehicle_alarm 是逻辑名表
+#        vehicle_alarm:
+#          table-strategy:
+#            standard:
+#              #分片键 device_time 即根据device_time这列的值与设定的算法进行分表
+#              shardingColumn: device_time
+#              # 精准分片算法
+#              preciseAlgorithmClassName: com.platform.es.demo.db.SubTableTimePreciseAlgorithm
+#              # 范围分片算法
+#              rangeAlgorithmClassName: com.platform.es.demo.db.SubTableTimeRangeAlgorithm
+#          keyGenerator:
+#            # 唯一值生成类型为雪花算法
+#            type: SNOWFLAKE
+#            # 对id列采用 sharding-jdbc的全局id生成策略
+#            column: id
+# mybatis-plus相关配置
+mybatis-plus:
+  type-aliases-package: com.platform.es.demo.entity
+  global-config:
+    db-config:
+      id-type: assign_id
+      table-underline: true
+      logic-not-delete-value: 0
+      logic-delete-value: 1
+  configuration:
+    cache-enabled: false
+    map-underscore-to-camel-case: true
+    jdbc-type-for-null: null

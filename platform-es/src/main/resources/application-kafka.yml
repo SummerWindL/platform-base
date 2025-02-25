@@ -1,0 +1,14 @@
+spring:
+  application:
+    name: kafka-consumer
+  kafka:
+    bootstrap-servers: localhost:9092
+    producer:  #生产者序列化器
+      retries: 10 #如果发生故障，生产者将尝试重新发送消息的次数。
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer #序列化生产者消息键的类。
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer #序列化生产者消息值的类。
+      ack-mode: manual
+    consumer: #消费者序列化器
+      group-id: ${spring.application.name}-test # 消费者组的唯一标识符。在消费者组中的所有消费者将共享消费者组的工作负载。
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer #用于反序列化消费者消息键的类。
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer #用于反序列化消费者消息值的类。

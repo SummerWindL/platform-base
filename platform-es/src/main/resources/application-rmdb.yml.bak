@@ -1,0 +1,90 @@
+spring:
+  jpa:
+    show-sql: true
+    # 格式化输出sql
+    #    properties:
+    #      hibernate:
+    #        format_sql: true
+#  datasource:
+#    dynamic:
+#      primary: master #设置默认的数据源或者数据源组,默认值即为master
+#      strict: false #严格匹配数据源,默认false. true未匹配到指定数据源时抛异常,false使用默认数据源
+#      datasource:
+#        slave_1:
+#          url: jdbc:postgresql://localhost:5432/aixdb?stringtype=unspecified&currentSchema=aix
+#          username: postgres
+#          password: postgres
+#          driver-class-name: org.postgresql.Driver # 3.2.0开始支持SPI可省略此配置
+#        #          url: jdbc:oracle:thin:@//192.168.101.95:1521/orcl
+#        #          username: BS306_DEV_20220707
+#        #          password: BS306_DEV_20220707
+#        #          driver-class-name: oracle.jdbc.driver.OracleDriver # 3.2.0开始支持SPI可省略此配置
+#        master:
+#          url: jdbc:mysql://localhost:3306/dynamic?useSSL=false
+#          username: root
+#          password: root123
+#          driver-class-name: com.mysql.cj.jdbc.Driver
+### sharding-jdbc
+  shardingsphere:
+    # 数据源配置（定义两个库ds0和ds1）
+    datasource:
+      names: ds0, ds1
+      ds0:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ds0?useSSL=false&serverTimezone=UTC
+        username: root
+        password: root123
+      ds1:
+        type: com.zaxxer.hikari.HikariDataSource
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        jdbc-url: jdbc:mysql://localhost:3306/ds1?useSSL=false&serverTimezone=UTC
+        username: root
+        password: root123
+
+    # 分片规则
+    rules:
+      sharding:
+        # 分库策略（根据user_id取模分2个库）
+        default-database-strategy:
+          standard:
+            sharding-column: user_id
+            sharding-algorithm-name: db-inline
+        # 分表策略（根据user_id取模分2张表）
+        tables:
+          user:
+            actual-data-nodes: ds$->{0..1}.user_$->{0..1}
+            table-strategy:
+              standard:
+                sharding-column: user_id
+                sharding-algorithm-name: table-inline
+            key-generate-strategy:
+              column: id
+              key-generator-name: snowflake
+
+        # 分片算法
+        sharding-algorithms:
+          db-inline:
+            type: INLINE
+            props:
+              algorithm-expression: ds$->{user_id % 2}
+          table-inline:
+            type: INLINE
+            props:
+              algorithm-expression: user_$->{user_id % 2}
+
+        # 分布式序列算法（雪花算法）
+        key-generators:
+          snowflake:
+            type: SNOWFLAKE
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: assign_id
+  configuration:
+    jdbc-type-for-null: varchar
+  mapper-locations: classpath*:com/platform/es/demo/mapper/sqlmap/*.xml
+
+mybatis:
+  configuration:
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl

@@ -79,7 +79,7 @@
         <dependency>
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
-            <version>6.0.2</version>
+            <version>8.0.28</version> <!-- 使用支持 caching_sha2_password 的版本 -->
         </dependency>
 
         <!-- druid -->

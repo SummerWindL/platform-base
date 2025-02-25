@@ -1,0 +1,9 @@
+es:
+  charset: UTF-8
+  client:
+    connectTimeOut: 5000
+    socketTimeout: 15000
+  host: localhost
+  port: 9200
+  scheme: http
+  token: es-token
